@@ -16,7 +16,7 @@ Manager "Can"
 3. Edit/Cancel the order
 
 ## Flow Diagram (Has been modify that is different to the final code)
-![Flow] (https://github.com/stone315/E-COM-Web/blob/master/Django1.jpg)
+![Flow Chart](https://github.com/stone315/E-COM-Web/blob/master/Django1.jpg)
 
 
 
