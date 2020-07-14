@@ -1,0 +1,60 @@
+
+{% extends "adminbase.html" %}
+
+{% block content %}
+
+<div class="container-fluid">
+  <div class="row justify-content-end">
+    <div class="col-1">
+      <form action="{% url 'logout' %}", method="POST">
+      {% csrf_token %}
+        <button type="submit" class="btn btn-secondary"> logout </button>
+      </form>
+    </div>
+  </div>
+
+</div>
+
+<div class="container-fluid">
+  <h2 class='mb-3'>Payment Information</h2>
+
+    <table id="dtBasicExample" class="table" width="100%">
+      <thead>
+        <tr>
+          <th class="th-sm align-middle text-center">OrderID</th>
+          <th class="th-sm align-middle text-center">Billing Name</th>
+          <th class="th-sm align-middle text-center">Billing Address</th>
+          <th class="th-sm align-middle text-center">Time</th>
+          <th class="th-sm align-middle text-center">TokenID</th>
+          <th class="th-sm align-middle text-center">Phone</th>
+          <th class="th-sm align-middle text-center">Email</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for record in payment %}
+        <tr height="100px">
+          <td class="align-middle text-center">{{ record.order.order_id }}</td>
+          <td class="align-middle text-center">{{ record.billing_first }} {{record.billing_last}}</td>
+          <td class="align-middle text-center">{{ record.billing_address }}, {{ record.billing_addresstwo }}, {{ record.billing_country }},{{ record.billing_state }},{{ record.billing_zip }}</td>
+          <td class="align-middle text-center">{{ record.Time }}</td>
+          <td class="align-middle text-center">{{ record.token_id }}</td>
+          <td class="align-middle text-center">{{ record.phone }}</td>
+          <td class="align-middle text-center">{{ record.email }}</td>
+        </tr> 
+        {% endfor %}
+      </tbody>
+    </table>
+
+  <div class="row justify-content-end">
+    <div class="col-15">
+      <form action="{% url 'mainTable' %}" method="POST">
+      {% csrf_token %}
+        <button type="submit" class="btn btn-primary">Order Table</button>
+      </form>
+    </div>
+    
+  </div>
+  
+</div>
+{% endblock content %}

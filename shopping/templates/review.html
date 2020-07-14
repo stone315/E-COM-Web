@@ -1,0 +1,79 @@
+<!DOCTYPE>
+
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+  <h2 class='mb-3'>Review</h2>
+
+    <table id="dtBasicExample" class="table" width="100%">
+      <thead>
+        <tr>
+          <th class="th-sm align-middle text-center">Name</th>
+          <th class="th-sm align-middle text-center">Quantity</th>
+          <th class="th-sm align-middle text-center">Unit</th>
+          <th class="th-sm align-middle text-center">Price</th>
+          <th class="th-sm align-middle text-center">Total Price</th>
+          <th class="th-sm align-middle text-center"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for item in cart %}
+        <tr height="100px">
+          <td><img src="static/image/{{item.id}}.jpg" height="100px" width="100px"> {{ item.name }}</td>
+          <td class="align-middle text-center">
+            <div class="dropdown">
+              <a class="btn btn-sm btn-secondary dropdown-toggle dropdown-toggle-split bg-light text-body" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{ item.quantity }}
+              </a>
+
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="height:200px;overflow-y: scroll">
+                {% for i in list %}
+                <form id="change_form{{item.id}}{{i}}" action="change_item/{{item.id}}/{{ i }}" method="POST">{% csrf_token %}
+                  <a class="dropdown-item" onclick="document.getElementById('change_form{{item.id}}{{i}}').submit();">{{ i }}</a>
+                </form>
+                {% endfor %}
+              </div>
+            </div>
+          </td>
+          <td class="align-middle text-center">{{ item.unit }}</td>
+          <td class="align-middle text-center">{{ item.price }}</td>
+          <td class="align-middle text-center">{{ item.total }}</td>
+          
+          <td class="align-middle">
+          <form id="remove_form" action="remove_item/{{item.id}}" method="POST">{% csrf_token %}
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <a onclick="document.getElementById('remove_form').submit();"><path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/></a>
+          </svg></form></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+  <div class= "row justify-content-end">
+    <div class="col-20">
+      <h5> Total Amount: $ {{ totalprice }} </h5>
+    </div>
+  </div>
+  <br>
+  <div class="row justify-content-end">
+    <div class="col-15">
+      <form action="clear_item" method="POST">
+      {% csrf_token %}
+        <button type="submit" class="btn btn-primary">Clear</button>
+      </form>
+    </div>
+    
+    
+    <div class="col-15 offset-1">
+      <form action="payment_form" method="POST">
+      {% csrf_token %}
+        <button type="submit" class="btn btn-primary">Check out</button>
+      </form>
+    </div>
+  </div>
+  
+</div>
+
+{% endblock content %}

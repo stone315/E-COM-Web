@@ -1,0 +1,88 @@
+
+{% extends "adminbase.html" %}
+
+{% block content %}
+<style>
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+</style>
+
+
+
+
+<div class="container-fluid">
+  <div class="row justify-content-end">
+    <div class="col-1">
+      <form action="{% url 'logout' %}", method="POST">
+      {% csrf_token %}
+        <button type="submit" class="btn btn-secondary"> logout </button>
+      </form>
+    </div>
+  </div>
+
+</div>
+
+<div class="container-fluid">
+  <h2 class='mb-3'>Edit Page</h2>
+    <h4 class='mb-3'> OrderID: {{order_id}}</h4>
+    <h6 class='mb-3'> EmployeeID: {{employee}}</h6>
+    <table id="dtBasicExample" class="table" width="100%">
+      <thead>
+        <tr>
+          <th class="th-sm align-middle text-center">ItemID</th>
+          <th class="th-sm align-middle text-center">Name</th>
+          <th class="th-sm align-middle text-center">Quantity</th>
+        </tr>
+      </thead>
+
+
+      <tbody>
+        {% for item in items %}
+        <tr height="100px">
+          <td class="align-middle text-center">{{ item.id }}</td>
+          <td class="align-middle text-center">{{ item.name }}</td>
+          <td class="align-middle text-center">{{ item.quantity }}</td>
+        </tr> 
+        {% endfor %}
+      </tbody>
+    </table>
+
+  
+  <div class="row mb-3 justify-content-end">
+    <div class="col-2 ">
+      <form action='{% url "update" %}', method="POST">
+      {% csrf_token %}
+        <div class="input-group">
+          <input type="number" name="neworder_id" class="form-control" placeholder="new OrderID" required>
+          <input type="number" name="order_id" class="form-control" hidden="True" value={{ order_id}}>
+          <div class="input-group-append">
+            <button type="submit" class="btn btn-primary"> Update </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="row mb-3 justify-content-end">
+    <div class="col-1">
+      <form action="{% url 'delete' order_id%}" method="POST">
+      {% csrf_token %}
+        <button type="submit" class="btn btn-primary">Delete Order</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="row mb-3 justify-content-end">
+    <div class="col-1">
+      <form action="{% url 'mainTable' %}" method="POST">
+      {% csrf_token %}
+        <button type="submit" class="btn btn-primary">Order Table</button>
+      </form>
+    </div>
+  </div>
+
+</div>
+{% endblock content %}
